@@ -4,26 +4,40 @@
 
 O arquivo docker-compose.yml define a infraestrutura de contêineres que será usada para executar a aplicação.
 
+## Instalação
 Para executar a aplicação, utilize:
-` /beedoo/public> docker-compose up -d
+```
+/beedoo/public> docker-compose up -d
+```
 
 Para rodar os testes:
-` /beedoo/public> composer install
-` /beedoo/public> vendor/bin/phpunit tests/MessageControllersTest.php
+```
+/beedoo/public> composer install
+```
 
-Para testa, dexei um arquivo chamado (Insomnia_2023-05-04.json), é só importar no seu Insomnia
-que tera toda estrura para realizar o request para API.
+```
+/beedoo/public> vendor/bin/phpunit tests/MessageControllersTest.php
+```
 
-Por via das dúvidas segue o cURL:
-`curl --request GET \
+segue o cURL:
+```
+curl --request GET \
    --url 'http://localhost:8000/messages?page=1&search=exe'
+```
 
-`curl --request POST \
+```
+curl --request POST \
   --url http://localhost:8000/messages \
   --header 'Content-Type: application/json' \
   --data '{"message": "Esta é uma mensagem de exemplo."}'
+```
 
-Para a criação da API em questão, foram tomadas algumas decisões técnicas com o objetivo de garantir um código limpo, organizado e de fácil manutenção. A seguir, listamos algumas das principais escolhas feitas durante o desenvolvimento:
+- Para testar a aplicação, dexei um arquivo chamado 'Insomnia_2023-05-04.json'
+só importar no seu Insomnia que tera toda estrura para realizar o request para API.
+
+
+## Foco do projeto
+Para a criação da API em questão, foram tomadas algumas decisões técnicas com o objetivo de garantir um código limpo, organizado e de fácil manutenção.
 
 ## Arquitetura
 - Foi escolhida uma arquitetura em camadas, seguindo os princípios do padrão de arquitetura MVC (Model-View-Controller). A camada de modelo (Model) foi implementada utilizando o ORM Eloquent do framework Laravel, permitindo um acesso fácil e intuitivo ao banco de dados. A camada de controle (Controller) foi implementada utilizando o padrão PSR-7 para requisições HTTP, o que permite que a API seja consumida por diferentes clientes. A camada de visão (View) não foi utilizada, uma vez que a API não retorna HTML, mas sim JSON.
@@ -39,7 +53,7 @@ Para a criação da API em questão, foram tomadas algumas decisões técnicas c
 As portas 5432 e 8000 foram mapeadas do host para os contêineres db e web, respectivamente, para permitir que a aplicação seja acessada pelo navegador e para permitir a conexão com o banco de dados a partir de ferramentas externas.
 - Foi utilizado o volumes para montar o diretório da aplicação no contêiner, permitindo que as mudanças no código sejam refletidas imediatamente na execução da aplicação.
 
-### Bibliotecas
+## Bibliotecas
 - Foram utilizadas as seguintes bibliotecas:
 
     - Phinx: é uma ferramenta de gerenciamento de banco de dados que permite a criação, migração e manipulação de esquemas de banco de dados de forma programática. Ele fornece uma interface fácil de usar para criar e gerenciar tabelas, colunas e chaves estrangeiras em um banco de dados.
@@ -52,11 +66,12 @@ As portas 5432 e 8000 foram mapeadas do host para os contêineres db e web, resp
 
     - PHPUnit: um framework para testes automatizados em PHP. Foi escolhido por ser um dos mais populares na comunidade PHP e por oferecer uma ampla variedade de recursos para testes.
 
-### Justificativas
+## Justificativas
 A escolha da arquitetura em camadas foi feita com o objetivo de separar as responsabilidades do sistema, garantindo maior organização e facilidade de manutenção. O uso do ORM Eloquent permitiu acesso simplificado ao banco de dados, evitando a escrita manual de queries SQL. A escolha do Slim Framework foi feita por sua simplicidade e facilidade de uso, permitindo a criação rápida e eficiente da API. A utilização da biblioteca Carbon permitiu manipulação simples e eficiente de datas, evitando a necessidade de escrever código complexo para esse fim. A escolha do PHPUnit foi feita por ser uma das ferramentas mais populares na comunidade PHP para testes automatizados, permitindo a criação de testes robustos para garantir a qualidade do código.
 
+## Nova funcionalidade: Adicionar comentários às mensagens
+
 ### Análise de requisitos e planejamento técnico
-- Nova funcionalidade: Adicionar comentários às mensagens
 
 - Para adicionar a funcionalidade de permitir que os usuários adicionem comentários às mensagens, algumas etapas devem ser seguidas:
 
@@ -83,16 +98,13 @@ A escolha da arquitetura em camadas foi feita com o objetivo de separar as respo
 - Como deve ser feita a autenticação e autorização? Os usuários devem ser capazes de fazer login com um nome de usuário e senha ou por meio de uma conta existente em outro serviço (como Google ou Facebook)?
 - Existe alguma restrição quanto ao número de comentários que um usuário pode fazer em uma mensagem?
 
-### Autoavaliação:
+## Avaliação:
 
 - Possíveis melhorias com mais tempo:
-    - Implementar testes automatizados para garantir que as novas funcionalidades e as funcionalidades existentes funcionem corretamente.
-    - Melhorar a interface do usuário para tornar a navegação e a interação mais fáceis.
     - Adicionar recursos de pesquisa avançados para permitir que os usuários encontrem mensagens e comentários com mais facilidade.
     - Implementar a capacidade de os usuários denunciarem mensagens ou comentários inapropriados.
-    - Melhorar a segurança do aplicativo, por exemplo, implementando medidas de proteção contra ataques de injeção SQL ou XSS.
-
-### Escalabilidade
+   
+## Escalabilidade
 
 - Para lidar com um grande volume de acessos e dados, é necessário considerar a escalabilidade do projeto. Algumas possíveis melhorias a serem implementadas para garantir a escalabilidade do sistema são:
 
