@@ -1,0 +1,51 @@
+version: '3'
+
+services:
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypass
+      POSTGRES_DB: mydb
+    ports:
+      - "5432:5432"
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+
+  php:
+    build:
+      context: .
+      dockerfile: Dockerfile.php
+    depends_on:
+      - db
+    volumes:
+      - .:/var/www/html
+    environment:
+      DATABASE_URL: postgres://myuser:mypass@db/mydb
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.nginx
+    ports:
+      - "8000:80"
+    depends_on:
+      - php
+    volumes:
+      - .:/var/www/html
+      
+  migrate:
+    build:
+      context: .
+      dockerfile: Dockerfile.php
+    depends_on:
+      - db
+    volumes:
+      - .:/var/www/html
+    environment:
+      DATABASE_URL: postgres://myuser:mypass@db/mydb
+    command: >
+      bash -c "vendor/bin/phinx migrate && vendor/bin/phinx migrate -c config/phinx.php -e development -t 20230502121500_create_CreateMessagesTable_table"
+
+volumes:
+  dbdata:

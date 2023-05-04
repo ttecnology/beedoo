@@ -1,0 +1,14 @@
+paths:
+    migrations: '%%PHINX_CONFIG_DIR%%/db/migrations'
+environments:
+    default_migration_table: phinxlog
+    default_environment: development
+
+    development:
+        adapter: pgsql
+        host: public-db-1
+        name: postgres
+        user: myuser
+        pass: mypass
+        port: 5432
+        charset: utf8
