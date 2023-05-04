@@ -7,13 +7,13 @@ O arquivo docker-compose.yml define a infraestrutura de contêineres que será u
 ## Instalação
 Para executar a aplicação, utilize:
 ```
+/beedoo/public> composer install
+```
+```
 /beedoo/public> docker-compose up -d
 ```
 
 Para rodar os testes:
-```
-/beedoo/public> composer install
-```
 
 ```
 /beedoo/public> vendor/bin/phpunit tests/MessageControllersTest.php
